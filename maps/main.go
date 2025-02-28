@@ -19,5 +19,11 @@ func main(){
 	marks , exist := students["Abdul"]
 	fmt.Println(marks)
 	fmt.Println(exist)
+	// Enter Value During Intialization
+	person := map[string]int{
+		"Chan":	89,
+		"Abdul": 100,
+	}
+	fmt.Println(person)
 
 }
