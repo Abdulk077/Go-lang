@@ -48,5 +48,11 @@ func main() {
 	
 	fmt.Println("Successfully Read the file")
 	//fmt.Println(byte)
-
+	// using os
+	content , err := os.ReadFile("examples.txt")
+	if err != nil {
+		fmt.Println("Error reading", err)
+		return 
+	}
+	fmt.Println(string(content))
 }
