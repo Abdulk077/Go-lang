@@ -1,13 +1,14 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 )
 
-func main() {
-	// Using Get Method
+func forgetrequest (){
+		// Using Get Method
 	fmt.Println()
 	res, err := http.Get("url")
 	if err != nil {
@@ -26,5 +27,38 @@ func main() {
 	}
 	fmt.Println(data)
 
+}
+func forPostrequest() {
+	todo := Todo {
+		UserID: 23,
+		Title: "Abdul",
+		Completed: true,
 	
+	}
+
+	jsonData, err := json.Marshal(todo)
+	if err != nil {
+		return 
+	}
+	// convert jason data to string
+	jsonString := string(jsonData)
+	jsonReader, err := string.NewReader(jsonString)
+	myurl := "http://jasonplaceholder.typicode.com/todos"
+	res, err := http.Post(myurl, "application/json", jsonReader)
+	if err != nil {
+		return
+	}
+	defer res.Body.Close()
+	data, _ := ioutil.ReadAll(res.Body)
+	fmt.Println(string( data ))
+
+}
+type Todo struct {
+	UserID int `json:"user_id"`
+	Title string `json:"title"`
+	Completed bool `json:"completed"`
+}
+func main() {
+
+	forPostrequest()
 }
