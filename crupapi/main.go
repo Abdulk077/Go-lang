@@ -43,7 +43,7 @@ func forPostrequest() {
 	// convert jason data to string
 	jsonString := string(jsonData)
 	jsonReader, err := string.NewReader(jsonString)
-	myurl := "http://jasonplaceholder.typicode.com/todos"
+	myurl := "https://jasonplaceholder.typicode.com/todos"
 	res, err := http.Post(myurl, "application/json", jsonReader)
 	if err != nil {
 		return
@@ -53,6 +53,39 @@ func forPostrequest() {
 	fmt.Println(string( data ))
 
 }
+func forUpdateRequest(){
+	todo := Todo{
+		UserID: 226,
+		Title: "Abdul",
+		Completed: false,
+	}
+	// conver to the json
+	jsonData, err := json.Marshal(todo)
+	if err != nil {
+		return 
+	}
+	jsonString := string(jsonData)
+	jsonReader, err := string.NewReader(jsonString)
+
+	myurl = "https://jasonplaceholder.typicode.com/todos/1"
+	req, err := http.NewRequest(http.MethodPut, myurl, jsonReader)
+	if err != nil {
+		return 
+	}
+	req.Header.Set("Content-Type", "application/json")
+	client := http.Client()
+	res, err := client.DO(req)
+	if err != nil {
+		return 
+	}
+	defer res.Body.Close()
+
+	data, _ := ioutil.ReadAll(res.Body)
+	fmt.Println("data: ", string(data))
+
+
+
+}
 type Todo struct {
 	UserID int `json:"user_id"`
 	Title string `json:"title"`
@@ -60,5 +93,4 @@ type Todo struct {
 }
 func main() {
 
-	forPostrequest()
 }
