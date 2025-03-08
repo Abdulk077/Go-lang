@@ -67,13 +67,13 @@ func forUpdateRequest(){
 	jsonString := string(jsonData)
 	jsonReader, err := string.NewReader(jsonString)
 
-	myurl = "https://jasonplaceholder.typicode.com/todos/1"
-	req, err := http.NewRequest(http.MethodPut, myurl, jsonReader)
+	myurls = "https://jasonplaceholder.typicode.com/todos/1"
+	req, err := http.NewRequest(http.MethodPut, myurls, jsonReader)
 	if err != nil {
 		return 
 	}
 	req.Header.Set("Content-Type", "application/json")
-	client := http.Client()
+	client := &http.Client{}
 	res, err := client.DO(req)
 	if err != nil {
 		return 
@@ -91,6 +91,23 @@ type Todo struct {
 	Title string `json:"title"`
 	Completed bool `json:"completed"`
 }
-func main() {
+func delete(){
+	const url = "https://jasonplaceholder.typicode.com/todos/1"
+	req, err := http.NewRequest(http.MethodDelete, url , nil)
+	if err != nil {
+		return 
+	}
 
+	client := &http.Client{}
+	res , err := client.Do(req)
+	if err != nil {
+		return 
+	}
+	defer res.Body.Close()
+	fmt.Println("Delete")
+
+
+}
+func main() {
+	delete()
 }
